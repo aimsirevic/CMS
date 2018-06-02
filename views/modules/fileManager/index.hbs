@@ -1,0 +1,103 @@
+
+<div class="container-fluid">
+  {{text}}
+  <form action="/fileManager/file/upload" method="post" enctype='multipart/form-data'>
+    <input class="btn btn-default" type="file" name="fileToUpload" multiple>
+    <input class="btn btn-default" type="submit" value="submit">
+  </form>
+  <form action="/fileManager" method="post">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter Folder Name Here" name="folderName" aria-label="Enter Folder Name Here"
+        aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Create Folder</button>
+      </div>
+      {{#if validation_errors}}
+      <div class="alert alert-danger">{{validation_errors}}</div>
+      {{/if}}
+    </div>
+  </form>
+  {{#if settings}}
+  <div class="row">
+    <div class="col-sm-8" style="background-color:lavenderblush;">
+      {{#each settings.breadcrumb as |crumb|}}
+      <a href="{{crumb.link}}">{{crumb.text}}</a> / {{/each}}
+    </div>
+    <div class="col-sm-4" style="background-color:lavender;"></div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Preview</th>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Path</th>
+        <th>Parent</th>
+        <th>..</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if settings.backButton.link}}
+      <tr>
+        <td>
+          <a href="{{settings.backButton.link}}">{{settings.backButton.text}}</a>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      {{/if}} {{#if files}} {{#each files as |file|}} {{#ifCond file.type '==' "folder"}}
+      <tr>
+        <td>
+          <a href="{{file.link}}"><img><p>Folder<br>image</p></a>
+        </td>
+        <td>{{file.type}}</td>
+        <td>{{file.name}}</td>
+        <td>{{file.path}}</td>
+        <td>{{file.parent}}</td>
+        <td>
+          <a href="{{file.delete}}">
+            <i class="material-icons">delete</i>
+          </a>
+        </td>
+      </tr>
+      {{/ifCond}}{{/each}} {{#each files as |file|}} {{#ifCond file.type '==' "file"}}
+      <tr>
+        <td>
+          {{#ifCond file.fileType '==' "image"}}
+            <img src="{{file.parentWithoutHome}}/thumb_{{file.name}}">
+          {{/ifCond}}
+          {{#ifCond file.fileType '==' "document"}}
+            <img><p>Document<br>image</p>
+          {{/ifCond}}
+          {{#ifCond file.fileType '==' "pdf"}}
+            <img><p>PDF<br>image</p>
+          {{/ifCond}}
+        </td>
+        <td>{{file.extension}}</td>
+        <td>{{file.name}}</td>
+        <td>{{file.path}}</td>
+        <td>{{file.parent}}</td>
+        <td>
+          <a href="{{file.delete}}">
+            <i>delete</i>
+          </a>
+          <br>
+          <a href="{{file.download}}">
+            <i>download</i>
+          </a>
+        </td>
+      </tr>
+      {{/ifCond}} {{/each}}{{else}}
+      <tr>
+        <td colspan="6">This folder is empty</td>
+      </tr>
+      {{/if}}
+    </tbody>
+  </table>
+  {{/if}}
+</div>
+
+<div id="here"></div>

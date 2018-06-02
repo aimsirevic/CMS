@@ -1,0 +1,117 @@
+
+<form action="/pages/{{mode}}" method="post" id="pagesForm">
+    Page name:
+    <br>
+    {{#ifCond mode '==' 'edit'}}
+        <input type="hidden" name="pageID" id="pageID" value="{{#if page}}{{page._id}}{{/if}}">
+    {{/ifCond}}
+    <input type="text" name="pageName" id="pageName" value="{{#if page}}{{page.name}}{{/if}}" required> {{validation_errors.0.pageName.msg}}
+    <br> Parent:
+    <br>
+    <select name="pageParent">
+        <option value="" {{#if page}}{{#ifCond page.parent '==' 'default'}}selected="selected"{{/ifCond}}{{else}}selected="selected"{{/if}}>Choose Parent Page</option>
+        {{#each pages as |parents|}}
+            <option value="{{parents._id}}" {{#if parents.selected}}{{#ifCond parents.selected '==' true}}selected="selected"{{/ifCond}}{{/if}}>{{parents.name}}</option>
+        {{/each}}
+    </select>
+    {{validation_errors.0.pageParent.msg}}
+    <br> Main:
+    <br>
+    <select name="pageMain" id="pageMain">
+        <option value="true" {{#if page}}{{#ifCond page.main '==' true}}selected="selected"{{/ifCond}}{{/if}}>true</option>
+        <option value="false" {{#if page}}{{#ifCond page.main '==' false}}selected="selected"{{/ifCond}}{{else}}selected="selected"{{/if}}>false</option>
+    </select>
+    {{validation_errors.0.pageMain.msg}}
+    <br> Template:
+    <br>
+    <select name="pageTemplate">
+        <option value="default" {{#ifCond template.selected '==' true}}selected="selected"{{/ifCond}}>Default template</option>
+        {{#each templates as |template|}}
+        <option value="{{template.name}}" {{#ifCond template.selected '==' true}}selected="selected"{{/ifCond}}>{{template.name}}</option>
+        {{/each}}
+    </select>
+    {{validation_errors.0.pageTemplate.msg}}
+    <br> Page image:
+    <br>
+    <button type="button" data-toggle="modal" data-target="#fileChooser">Choose image</button>
+    <input type="text" id="image_file" name="pageImage" readonly="true" value="{{#if page}}{{page.image}}{{/if}}"> {{validation_errors.0.pageImage.msg}}
+    <br> Text:
+    <br>
+    <textarea name="pageText">{{#if page}}{{page.text}}{{/if}}</textarea>{{validation_errors.0.pageText.msg}}
+    <br> URL:
+    <br>
+    <p>http://localhost:3000/<input id="urlOutput" name="pageURL" value="{{#if page}}{{page.URL}}{{/if}}" readonly></p>{{validation_errors.0.pageURL.msg}}
+    <input type="text" id="pageURL" value="{{#if page}}{{page.URL}}{{/if}}">
+    <br> Keywords:
+    <br>
+    <input type="text" name="pageKeywords" value="{{#if page}}{{page.keywords}}{{/if}}"> {{validation_errors.0.pageKeywords.msg}}
+    <br> Description:
+    <br>
+    <input type="text" name="pageDescription" value="{{#if page}}{{page.description}}{{/if}}"> {{validation_errors.0.pageDescription.msg}}
+    <br>
+    <br>
+</form>
+
+<button id="submitPageForm" name="pageSubmit">Submit</button>
+<!-- Modal -->
+<div class="modal fade" id="fileChooser" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <div id="breadcrumb"></div>
+                <p id="back"></p>
+                <div class="container" id="files">
+                    <div class="col-xs-4 col-sm-3 col-md-2 nopad text-center">
+                        <label class="image-checkbox">
+                            <img class="img-responsive" src="https://dummyimage.com/600x400/000/fff" />
+                            <input type="checkbox" class="check_img" />
+                            <i class="fa fa-check hidden"></i>
+                        </label>
+                    </div>
+                    <div class="col-xs-4 col-sm-3 col-md-2 nopad text-center">
+                        <a href="#">
+                            <label class="image-checkbox">
+                                <img class="img-responsive" src="https://dummyimage.com/600x400/000/fff" />
+                            </label>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="error_choosing_image"></div>
+                <button type="button" class="btn btn-default" id="choose_image">Choose</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="mainPageModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Change main page</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Are you sure you want to change main page?
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="mainPageYES">Yes</button>
+          <button type="button" class="btn btn-secondary" id="mainPageNO">No</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>

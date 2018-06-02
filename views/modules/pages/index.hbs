@@ -1,0 +1,154 @@
+<h3>{{text}}</h3>
+<a href="/pages/add" class="btn btn-default">Add New Page</a>
+<h1 style="color: red">Problem in second table!</h1>
+
+<h3>All pages list</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Parent</th>
+            <th scope="col">Main</th>
+            <th scope="col">Template</th>
+            <th scope="col">Image</th>
+            <th scope="col">Text</th>
+            <th scope="col">Url</th>
+            <th scope="col">Keywords</th>
+            <th scope="col">Description</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each pages as |page|}}
+        <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{#if page.name}}{{page.name}}{{else}}----{{/if}}</td>
+            <td>{{#if page.parentName}}{{page.parentName}}{{else}}----{{/if}}</td>
+            <td>{{page.main}}</td>
+            <td>{{#if page.template}}{{page.template}}{{else}}----{{/if}}</td>
+            <td>
+                {{#if page.thumb}}<img src="{{page.thumb}}">{{else}}----{{/if}}
+            </td>
+            <td>{{#if page.text}}{{page.text}}{{else}}----{{/if}}</td>
+            <td>{{#if page.URL}}{{page.URL}}{{else}}----{{/if}}</td>
+            <td>{{#if page.keywords}}{{page.keywords}}{{else}}----{{/if}}</td>
+            <td>{{#if page.description}}{{page.description}}{{else}}----{{/if}}</td>
+            <td>
+                <a href="/pages/delete/{{page._id}}">
+                    <i>delete</i>
+                </a>
+            </td>
+            <td>
+                <a href="/pages/edit/{{page._id}}">
+                    <i>edit</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br><br>
+<hr><hr>
+<br><br>
+<h3>Parent pages with childs</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Main</th>
+            <th scope="col">Template</th>
+            <th scope="col">Image</th>
+            <th scope="col">Text</th>
+            <th scope="col">Url</th>
+            <th scope="col">Keywords</th>
+            <th scope="col">Description</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each parents as |parent|}}
+        <tr>
+            <th scope="row">{{@index}}</th>
+            <td>{{#if parent.name}}{{parent.name}}{{else}}----{{/if}}</td>
+            <td>{{parent.main}}</td>
+            <td>{{#if parent.template}}{{parent.template}}{{else}}----{{/if}}</td>
+            <td>
+                {{#if parent.thumb}}<img src="{{parent.thumb}}">{{else}}----{{/if}}
+            </td>
+            <td>{{#if parent.text}}{{parent.text}}{{else}}----{{/if}}</td>
+            <td>{{#if parent.URL}}{{parent.URL}}{{else}}----{{/if}}</td>
+            <td>{{#if parent.keywords}}{{parent.keywords}}{{else}}----{{/if}}</td>
+            <td>{{#if parent.description}}{{parent.description}}{{else}}----{{/if}}</td>
+            <td>
+                <a href="/pages/delete/{{parent._id}}">
+                    <i>delete</i>
+                </a>
+            </td>
+            <td>
+                <a href="/pages/edit/{{parent._id}}">
+                    <i>edit</i>
+                </a>
+            </td>
+        </tr>
+        {{#each parent.childs as |child|}}
+                    <tr class="child">
+                        <th scope="row">child</th>
+                        <td>{{#if child.name}}{{child.name}}{{else}}----{{/if}}</td>
+                        <td>{{child.main}}</td>
+                        <td>{{#if child.template}}{{child.template}}{{else}}----{{/if}}</td>
+                        <td>
+                            {{#if child.thumb}}<img src="{{child.thumb}}">{{else}}----{{/if}}
+                        </td>
+                        <td>{{#if child.text}}{{child.text}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.URL}}{{child.URL}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.keywords}}{{child.keywords}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.description}}{{child.description}}{{else}}----{{/if}}</td>
+                        <td>
+                            <a href="/pages/delete/{{child._id}}">
+                                <i>delete</i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/pages/edit/{{child._id}}">
+                                <i>edit</i>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+        {{/each}}
+    </tbody>
+</table>
+
+
+<!--{{#if parent.childs}}
+                {{#each parent.childs as |child|}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td>{{#if child.name}}{{child.name}}{{else}}----{{/if}}</td>
+                        <td>{{child.main}}</td>
+                        <td>{{#if child.template}}{{child.template}}{{else}}----{{/if}}</td>
+                        <td>
+                            {{#if child.thumb}}<img src="{{child.thumb}}">{{else}}----{{/if}}
+                        </td>
+                        <td>{{#if child.text}}{{child.text}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.URL}}{{child.URL}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.keywords}}{{child.keywords}}{{else}}----{{/if}}</td>
+                        <td>{{#if child.description}}{{child.description}}{{else}}----{{/if}}</td>
+                        <td>
+                            <a href="/pages/delete/{{child._id}}">
+                                <i>delete</i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/pages/edit/{{child._id}}">
+                                <i>edit</i>
+                            </a>
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/if}}-->
